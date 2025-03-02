@@ -1,32 +1,88 @@
 #include <stdio.h>
 
-// Desafio de Xadrez - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
-// O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
+void movimentos_pecas(char nome_peca[11], int tipo, int qtd_movimentos){
 
-int main() {
-    // Nível Novato - Movimentação das Peças
-    // Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
+    //Cada peça tem um tipo 1 = Torre, 2 = Bispo, 3 = Rainha, 4 = Cavalo
+    //Esses tipos são definidos pela entrada do usuário ao escolher a peça.
+    
+    if (tipo == 1){
+        for (int i = 1; i < qtd_movimentos + 1; i++){
+            if (i == 1){
+                printf("%s se moveu uma casa à direita.\n", nome_peca);
+            } else {
+                printf("%s se moveu outra casa à direita.\n", nome_peca);
+            }
+            if (i == qtd_movimentos) {
+                printf("%s se moveu %d casas\n", nome_peca, qtd_movimentos);
+            }
+        }
+    } else if (tipo == 2){
+        int i = 1;
+        do {
+            i++;
+            printf("%s se moveu uma casa para cima.\n", nome_peca);
+            printf("%s se moveu uma casa à direita.\n", nome_peca);  
+        } while(i != qtd_movimentos);
+        printf("%s se moveu %d casas na diagonal.\n", nome_peca, qtd_movimentos);
+    } else if (tipo == 3){
+        //Rainha pode-se mover em todas as posições. Ela irá se mover em 8 casas à esquerda.
+        for(int i = 1; i < qtd_movimentos + 1; i++){
+            i == 1 ? printf("%s se moveu uma casa à esquerda.\n", nome_peca) : printf("%s se moveu outra casa à esquerda.\n", nome_peca);
 
-    // Implementação de Movimentação do Bispo
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação do Bispo em diagonal.
+            if (i == qtd_movimentos) {
+                printf("%s se moveu %d casas à esquerda.\n", nome_peca, qtd_movimentos);
+            }
+        }
+    } else { //Else porque sobrou somente o tipo 4.
+        //Cavalo pode-se mover em "L".
+        for (int i = 1; i < qtd_movimentos + 1; i++) {
+            i == 1 ? printf("%s se moveu uma casa para baixo.\n", nome_peca) : printf("%s se moveu outra casa para baixo.\n", nome_peca);
 
-    // Implementação de Movimentação da Torre
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Torre para a direita.
+            for(int j = 1; j < i; j++){
+                printf("%s se moveu uma casa à direita.\n", nome_peca);
+                printf("%s se moveu em 'L' %d casas para baixo e %d casa à direita.\n", nome_peca, qtd_movimentos, j);
+            }
 
-    // Implementação de Movimentação da Rainha
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Rainha para a esquerda.
+        }
+    }
+}
 
-    // Nível Aventureiro - Movimentação do Cavalo
-    // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
-    // Um loop pode representar a movimentação horizontal e outro vertical.
+int main(){
+    /*Simução de movimentos de xadrez.*/
 
-    // Nível Mestre - Funções Recursivas e Loops Aninhados
-    // Sugestão: Substitua as movimentações das peças por funções recursivas.
-    // Exemplo: Crie uma função recursiva para o movimento do Bispo.
+    int i = 0; // Valor inicial para cada peça.
+    char torre[11] = "Torre"; //Mova-se à direita;
+    char bispo[11] = "Bispo"; // Mova-se em diagonal;
+    char rainha[11] = "Rainha"; //Mova-se em todas as posições;
+    char cavalo[11] = "Cavalo"; //Mova-se em L.
 
-    // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
-    // Inclua o uso de continue e break dentro dos loops.
+    int escolha_peca;
+
+    do {
+        printf("\n1. Torre\n");
+        printf("2. Bispo\n");
+        printf("3. Rainha\n");
+        printf("4. Cavalo\n");
+        printf("5. Sair\n> ");
+        scanf("%d", &escolha_peca);
+
+        switch(escolha_peca){
+            case 1:
+            movimentos_pecas(torre, escolha_peca, 5);
+            break;
+            case 2:
+            movimentos_pecas(bispo, escolha_peca, 5);
+            break;
+            case 3:
+            movimentos_pecas(rainha, escolha_peca, 8);
+            break;
+            case 4:
+            movimentos_pecas(cavalo, escolha_peca, 2); 
+            break;
+        }
+
+    } while(escolha_peca != 5);
 
     return 0;
+
 }
