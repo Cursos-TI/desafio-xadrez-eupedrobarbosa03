@@ -1,50 +1,41 @@
 #include <stdio.h>
 
-void movimentos_pecas(char nome_peca[11], int tipo, int qtd_movimentos){
+void movimentoTorre(int movimentos) {
+    if (movimentos > 0) {
+        printf("Torre se moveu à direita\n");
+        movimentoTorre(movimentos - 1);
+    }
+}
 
-    //Cada peça tem um tipo 1 = Torre, 2 = Bispo, 3 = Rainha, 4 = Cavalo
-    //Esses tipos são definidos pela entrada do usuário ao escolher a peça.
-    
-    if (tipo == 1){
-        for (int i = 1; i < qtd_movimentos + 1; i++){
-            if (i == 1){
-                printf("%s se moveu uma casa à direita.\n", nome_peca);
-            } else {
-                printf("%s se moveu outra casa à direita.\n", nome_peca);
-            }
-            if (i == qtd_movimentos) {
-                printf("%s se moveu %d casas\n", nome_peca, qtd_movimentos);
-            }
-        }
-    } else if (tipo == 2){
-        int i = 1;
-        do {
-            i++;
-            printf("%s se moveu uma casa para cima.\n", nome_peca);
-            printf("%s se moveu uma casa à direita.\n", nome_peca);  
-        } while(i != qtd_movimentos);
-        printf("%s se moveu %d casas na diagonal.\n", nome_peca, qtd_movimentos);
-    } else if (tipo == 3){
-        //Rainha pode-se mover em todas as posições. Ela irá se mover em 8 casas à esquerda.
-        for(int i = 1; i < qtd_movimentos + 1; i++){
-            i == 1 ? printf("%s se moveu uma casa à esquerda.\n", nome_peca) : printf("%s se moveu outra casa à esquerda.\n", nome_peca);
+void movimentoBispo(int movimentos) {
+    do {
 
-            if (i == qtd_movimentos) {
-                printf("%s se moveu %d casas à esquerda.\n", nome_peca, qtd_movimentos);
-            }
-        }
-    } else { //Else porque sobrou somente o tipo 4.
-        //Cavalo pode-se mover em "L".
-        for (int i = 1; i < qtd_movimentos + 1; i++) {
-            i == 1 ? printf("%s se moveu uma casa para baixo.\n", nome_peca) : printf("%s se moveu outra casa para baixo.\n", nome_peca);
+        printf("Bispo se moveu para cima\n");
+        printf("Bispo se moveu à direita.\n");
+        movimentos--;
 
-            for(int j = 1; j < i; j++){
-                printf("%s se moveu uma casa à direita.\n", nome_peca);
-                printf("%s se moveu em 'L' %d casas para baixo e %d casa à direita.\n", nome_peca, qtd_movimentos, j);
-            }
+    } while (movimentos != 0);
+}
+
+void movimentoRainha(int movimentos) {
+    if (movimentos > 0) {
+        printf("Rainha se moveu à esquerda.\n");
+        movimentoRainha(movimentos - 1);
+    }
+}
+
+void movimentoCavalo(int movimentos) {
+    for(int i = 1; i < movimentos; i++) {
+        printf("Cavalo se moveu para baixo.\n");
+
+        int j = 1;
+        while (j < i) {
+            j++;
+            printf("Cavalo se moveu à direita.\n");
 
         }
     }
+
 }
 
 int main(){
@@ -68,16 +59,19 @@ int main(){
 
         switch(escolha_peca){
             case 1:
-            movimentos_pecas(torre, escolha_peca, 5);
+            movimentoTorre(5);
             break;
+            
             case 2:
-            movimentos_pecas(bispo, escolha_peca, 5);
+            movimentoBispo(5);
             break;
+
             case 3:
-            movimentos_pecas(rainha, escolha_peca, 8);
+            movimentoRainha(8);
             break;
+
             case 4:
-            movimentos_pecas(cavalo, escolha_peca, 2); 
+            movimentoCavalo(3);
             break;
         }
 
